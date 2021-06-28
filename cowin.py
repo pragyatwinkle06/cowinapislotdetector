@@ -2,7 +2,11 @@ import email
 import smtplib
 from datetime import datetime
 
+
 import requests
+
+id=int(input("ENTER your District ID ( eg: for lucknow = 670 , for Prayagraj=624)"))
+age=int(input("Enter age  (for 18+ enter 18 and for 45+ enter 45 :" ))
 
 def create_session_info(center, session):
     return {"name": center["name"],
@@ -19,11 +23,11 @@ def is_available(session):
     return session["capacity"] > 0
 
 def is_eighteen_plus(session):
-    return session["age_limit"] == 18
+    return session["age_limit"] == age
 
 def get_for_seven_days(start_date):
     url = "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict"
-    params = {"district_id":670, "date": start_date.strftime("%d-%m-%Y")}
+    params = {"district_id":id, "date": start_date.strftime("%d-%m-%Y")}
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0"}
     resp = requests.get(url, params=params, headers=headers)
     data = resp.json()
@@ -34,8 +38,8 @@ def create_output(session_info):
 
 print(get_for_seven_days(datetime.today()))
 content = "\n".join([create_output(session_info) for session_info in get_for_seven_days(datetime.today())])
-username = "pragyatwinkle06@gmail.com"
-password = "pragya06"
+'''username = "pragyatwinkle06@gmail.com"
+password = input("enter your password")
 
 if not content:
     print("No availability")
@@ -48,5 +52,5 @@ else:
 
     with smtplib.SMTP(host='smtp.gmail.com', port='587') as server:
         server.starttls()
-        server.login(pragyatwinkle06@gmail.com,pragya06)
-        server.send_message(email_msg, pragyatwinkle06@gmail.com, twinkleshukla06@gmail.com)
+        server.login(username,password)
+        server.send_message(email_msg,username, username) '''
